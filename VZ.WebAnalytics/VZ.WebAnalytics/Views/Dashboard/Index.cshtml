@@ -132,48 +132,19 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
+                                <th>Page Path</th>
                                 <th>Page Title</th>
                                 <th>Page Viwes</th>
-                                <th>New Visits</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr ng-repeat="row in TopContents">
 
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>10/21/2013</td>
-                                <td>htt://nhddnnnd</td>
-                                <td>1222</td>
-                                <td>23</td>
+                                <td>{{row.Date}}</td>
+                                <td>{{row.PagePath}}</td>
+                                <td>{{row.PageTitle}}</td>
+                                <td>{{row.PageViwes}}</td>
                             </tr>
 
                         </tbody>

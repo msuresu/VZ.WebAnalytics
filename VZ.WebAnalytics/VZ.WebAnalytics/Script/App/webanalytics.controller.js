@@ -55,6 +55,11 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	//DrawSmallLineGraph("siteMetrcis4", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits")
 	
 	var UserActiveity = {};
+	$scope.TopContents = [];
+	$scope.TotalPerViewViewCount = 0;
+	$scope.TotalVistCount = 0;
+	$scope.TotalUniqueCount = 0;
+	$scope.TotalViewCount = 0;
 	UserActiveity = {ActivityType:"PageType",DomainName:"11122222"};
 	WebAnalyticsFactory.GetDashboardContent("Domainanme").then(function (Response) {
 		var tes = Response;
@@ -109,6 +114,10 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 				test = { name: "New Visitors", y: Response.objVisterType.NewvistorPer, count: Response.objVisterType.Newvistor };
 				jsonData.push(test);
 				DrawPieChart(visterTypeBarChart, '', jsonData);
+			}
+			if(Response.objTopContents)
+			{
+				$scope.TopContents = Response.objTopContents;
 			}
 
 			
