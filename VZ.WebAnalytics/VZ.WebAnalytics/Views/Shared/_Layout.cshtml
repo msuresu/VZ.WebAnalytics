@@ -4,40 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB ANALYTICS</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/sb-admin.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+<body ng-app="WebAnalytics">
+
+
+    <div id="wrapper" ng-controller="WebAnalyticsCtrl">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header navbar-brand" style="color:white">
                 WEB ANALYTICS
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+            <!-- Top Menu Items -->
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Page Viwes</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Performance</a>
+                    </li>
+
                 </ul>
             </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+
+
+            </div>
+            <!-- /.container-fluid -->
         </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>          
-
-            
-        </footer>
-        
+        <!-- /#page-wrapper -->
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Script/App/angular.min.js"></script>
     <script src="~/Script/App/highcharts.js"></script>
     <script src="~/Script/App/highcharts-more.js"></script>
     <script src="~/Script/App/exporting.js"></script>
     <script src="~/Script/App/no-data-to-display.js"></script>
     <script src="~/Script/App/DrawBarGraph.js"></script>
     <script src="~/Script/App/EventTracking.js"></script>
+    <script src="~/Script/App/DrawPieChart.js"></script>
+    <script src="~/Script/App/webanalytics.controller.js"></script>
 </body>
 </html>

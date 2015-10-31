@@ -17,7 +17,7 @@ $(document).delegate("input", "click", function () {
     {
         var thisobj = $(this);
         
-
+        
         location = window.location.href;
         pathName = window.location.pathname;
         

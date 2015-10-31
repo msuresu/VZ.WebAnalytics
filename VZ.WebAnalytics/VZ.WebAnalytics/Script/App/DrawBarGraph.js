@@ -1,7 +1,5 @@
 ﻿$(function () {
-    arrDateTime = ["10/26/2015", "10/26/2015", "10/26/2015", "10/26/2015"];
-    arrNoOfVisters = [100,29,49,70];
-    DrawLineGraph("siteMetrcis", arrDateTime, arrNoOfVisters,"Site Metrics","Visits")
+   
 });
 
 function DrawBarGraph(htmlId, arrNonProductiveData, arrProductiveData, arrCategories, headerText, arrProductiveInSec, arrNonProductiveInSec) {
@@ -14,10 +12,15 @@ function DrawBarGraph(htmlId, arrNonProductiveData, arrProductiveData, arrCatego
             type: 'column'
         },
         title: {
-            text: headerText,
+            text: '',
             style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || '#333333',
-                fontFamily: '\'Lato\', sans-serif', lineHeight: '18px', fontSize: '18px', fontWeghit: 'bold'
+                display: 'none'
+            }
+        },
+        subtitle: {
+            text: '',
+            style: {
+                display: 'none'
             }
         },
         xAxis: {
@@ -32,7 +35,7 @@ function DrawBarGraph(htmlId, arrNonProductiveData, arrProductiveData, arrCatego
 
                     click: function (e) {
                         var index = arrCategories.indexOf(this.value);
-                     
+
 
 
 
@@ -91,7 +94,7 @@ function DrawBarGraph(htmlId, arrNonProductiveData, arrProductiveData, arrCatego
                 point: {
                     events: {
                         click: function (e) {
-                            
+
                         },
                         mouseOver: function () {
                             if (this != selected)
@@ -310,7 +313,7 @@ function DrawInlineBarGraph(htmlId, arrNonProductiveData, arrProductiveData, arr
 
 
 
-function DrawLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText,yaxisTitle) {
+function DrawLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText, yaxisTitle) {
     var chart4 = "";
     var selected = "";
     chart4 = new Highcharts.Chart({
@@ -349,9 +352,9 @@ function DrawLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText,yaxisTitle) 
 
                 $.each(this.points, function (i, point) {
                     if (ind > -1) {
-                     //   s += '<br/>App Name: <b>' + point.series.options.composition[ind].AppName + '</b>';
+                        //   s += '<br/>App Name: <b>' + point.series.options.composition[ind].AppName + '</b>';
                     }
-                   // s += '<br/><span style="color:' + point.series.color + '">' + point.series.name + '</span>: <b>' + point.y + '</b>';
+                    // s += '<br/><span style="color:' + point.series.color + '">' + point.series.name + '</span>: <b>' + point.y + '</b>';
                 });
 
                 return s;
@@ -363,7 +366,86 @@ function DrawLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText,yaxisTitle) 
         series: [{
             name: 'Visits',
             data: NoOfVisters,
-          //  composition: arrAppUsageInfo
+            //  composition: arrAppUsageInfo
+        }],
+        exporting: {
+            buttons: {
+                contextButton: {
+                    enabled: false
+                },
+
+                //customButton: {
+                //    text: 'Back',
+                //    style: {
+                //        color: 'red',
+                //        cursor: 'pointer'
+                //    },
+                //    onclick: function () {
+                //        var DesktopAnalyticsScope = angular.element($('#DesktopAnalytics-container')).scope();
+                //        if (htmlId == "piechart2") {
+                //            //  DesktopAnalyticsScope.BindCallDetailsData(DesktopAnalyticsScope.CallDetails);
+                //            DesktopAnalyticsScope.backFromCallUsageDetails();
+                //            DesktopAnalyticsScope.ShowAllWeekData(null, DesktopAnalyticsScope.ActiveAppUsageDetails, DesktopAnalyticsScope.CallDetails);
+                //        }
+                //    }
+                //},
+
+            }
+        }
+    });
+}
+
+function DrawSmallLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText, yaxisTitle) {
+    var chart5 = "";
+    var selected = "";
+    chart4 = new Highcharts.Chart({
+        chart: {
+            renderTo: htmlId,
+            type: 'areaspline'
+        },
+        title: {
+            text: '',
+            style: {
+                display: 'none'
+            }
+        },
+        subtitle: {
+            text: '',
+            style: {
+                display: 'none'
+            }
+        },
+
+        xAxis: {
+            categories: arrDateTime,
+            labels: {
+                enabled: false
+            },
+
+        },
+        yAxis: {
+            title: {
+                text: yaxisTitle,
+                enabled: false
+            },
+            labels: {
+                enabled: false
+            },
+
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+       
+        legend: {
+            enabled: false
+        },
+        series: [{
+            name: 'Visits',
+            data: NoOfVisters,
+            //  composition: arrAppUsageInfo
         }],
         exporting: {
             buttons: {
