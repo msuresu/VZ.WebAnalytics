@@ -3,6 +3,7 @@ var app = angular.module('WebAnalytics', []);
 app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce', '$rootScope', function ($http, $interval, $window, $q, $sce, $rootScope) {
 	var WebAnalyticsFactory = {};
 	var DasboardURL = "http://localhost:53373/TrackerRestService.svc/GetDashboard";
+	var PerformanceURL = "http://localhost:53373/TrackerRestService.svc/GetPagePerformance";
 
 	WebAnalyticsFactory.GetDashboardContent = function (request) {
 		var deferred = $q.defer();
@@ -21,6 +22,24 @@ app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce
 		});
 
 		return deferred.promise;
+	}
+	WebAnalyticsFactory.GetPagePerformance = function () {
+	    var deferred = $q.defer();
+
+	    $http({
+	        url: PerformanceURL,
+	        dataType: "json/application",
+	        method: "GET",
+	        headers: {
+	            "Content-Type": "application/json; charset=utf-8"
+	        }
+	    }).success(function (data) {
+	        deferred.resolve(data);
+	    }).error(function (error) {
+	        deferred.reject("Error");
+	    });
+
+	    return deferred.promise;
 	}
 	WebAnalyticsFactory.Insert1 = function (request) {
 		var deferred = $q.defer();
@@ -60,7 +79,32 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	$scope.TotalVistCount = 0;
 	$scope.TotalUniqueCount = 0;
 	$scope.TotalViewCount = 0;
-	UserActiveity = {ActivityType:"PageType",DomainName:"11122222"};
+	$scope.IsDashBoard = true;
+	UserActiveity = { ActivityType: "PageType", DomainName: "11122222" };
+    $scope.MenuClick = function (strMenuName) {
+	    if(strMenuName=="Dashboard")
+	    {
+	        $scope.IsDashBoard = true;
+	        $scope.IsPageView = false;
+	        $scope.IsPerformance = false;
+	    }
+	    else if (strMenuName == "Performance")
+	    {
+	        $scope.IsDashBoard = false;
+	        $scope.IsPageView = false;
+	        $scope.IsPerformance = true;
+	    }
+	    else
+	    {
+	        $scope.IsDashBoard = false;
+	        $scope.IsPageView = true;
+	        $scope.IsPerformance = false;
+	    }
+	};
+	$scope.GetDuration=function(strStartTime,strEndTime)
+	{
+	    return (new Date(strEndTime).getTime() - new Date(strStartTime).getTime())/1000;
+	}
 	WebAnalyticsFactory.GetDashboardContent("Domainanme").then(function (Response) {
 		var tes = Response;
 		if(Response)
@@ -124,6 +168,11 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 		}
 	}).finally(function () {
 		
+	});
+	WebAnalyticsFactory.GetPagePerformance().then(function (Response) {
+	    $scope.PagePerformance = Response;
+	}).finally(function () {
+
 	});
 
 	
