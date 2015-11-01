@@ -2,8 +2,8 @@
 var app = angular.module('WebAnalytics', []);
 app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce', '$rootScope', function ($http, $interval, $window, $q, $sce, $rootScope) {
 	var WebAnalyticsFactory = {};
-	var DasboardURL = "http://localhost:53373/TrackerRestService.svc/GetDashboard";
-	var PerformanceURL = "http://localhost:53373/TrackerRestService.svc/GetPagePerformance";
+	var DasboardURL = "http://vztrackerrestapi.azurewebsites.net/TrackerRestService.svc/GetDashboard";
+	var PerformanceURL = "http://vztrackerrestapi.azurewebsites.net/TrackerRestService.svc/GetPagePerformance";
 
 	WebAnalyticsFactory.GetDashboardContent = function (request) {
 		var deferred = $q.defer();
@@ -11,7 +11,7 @@ app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce
 		$http({
 			url: DasboardURL + "/" + request,
 			dataType: "json/application",
-			method: "GET",
+			method: "GET",			
 			headers: {
 				"Content-Type": "application/json; charset=utf-8"
 			}
@@ -24,22 +24,22 @@ app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce
 		return deferred.promise;
 	}
 	WebAnalyticsFactory.GetPagePerformance = function () {
-		var deferred = $q.defer();
+	    var deferred = $q.defer();
 
-		$http({
-			url: PerformanceURL,
-			dataType: "json/application",
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8"
-			}
-		}).success(function (data) {
-			deferred.resolve(data);
-		}).error(function (error) {
-			deferred.reject("Error");
-		});
+	    $http({
+	        url: PerformanceURL,
+	        dataType: "json/application",
+	        method: "GET",
+	        headers: {
+	            "Content-Type": "application/json; charset=utf-8"
+	        }
+	    }).success(function (data) {
+	        deferred.resolve(data);
+	    }).error(function (error) {
+	        deferred.reject("Error");
+	    });
 
-		return deferred.promise;
+	    return deferred.promise;
 	}
 	WebAnalyticsFactory.Insert1 = function (request) {
 		var deferred = $q.defer();
@@ -72,7 +72,7 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	//DrawSmallLineGraph("siteMetrcis2", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits")
 	//DrawSmallLineGraph("siteMetrcis3", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits")
 	//DrawSmallLineGraph("siteMetrcis4", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits")
-
+	
 	var UserActiveity = {};
 	$scope.TopContents = [];
 	$scope.TotalPerViewViewCount = 0;
@@ -82,26 +82,26 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	$scope.IsDashBoard = true;
 	$scope.DomainName = "localhost";
 	UserActiveity = { ActivityType: "PageType", DomainName: "11122222" };
-	$scope.MenuClick = function (strMenuName) {
+    $scope.MenuClick = function (strMenuName) {
 		if (strMenuName == "Dashboard") {
-			$scope.IsDashBoard = true;
-			$scope.IsPageView = false;
-			$scope.IsPerformance = false;
-		}
+	        $scope.IsDashBoard = true;
+	        $scope.IsPageView = false;
+	        $scope.IsPerformance = false;
+	    }
 		else if (strMenuName == "Performance") {
-			$scope.IsDashBoard = false;
-			$scope.IsPageView = false;
-			$scope.IsPerformance = true;
-		}
+	        $scope.IsDashBoard = false;
+	        $scope.IsPageView = false;
+	        $scope.IsPerformance = true;
+	    }
 		else {
-			$scope.IsDashBoard = false;
-			$scope.IsPageView = true;
-			$scope.IsPerformance = false;
+	        $scope.IsDashBoard = false;
+	        $scope.IsPageView = true;
+	        $scope.IsPerformance = false;
 			if ($scope.OverAllDasboard) {
 
 				if ($scope.OverAllDasboard.objTopContents) {
 					$scope.TopContentsAll = $scope.OverAllDasboard.objTopContents;
-				}
+	    }
 				if ($scope.OverAllDasboard.objActionContents) {
 					$scope.TopContentsAction = $scope.OverAllDasboard.objActionContents;
 				}
@@ -128,66 +128,66 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 			$scope.OverAllDasboard = Response;
 			if (Response) {
 				if (Response.objSiteMetrics) {
-					var arrDateTime = []; var arrNoOfVisters = []; var totalVistCount = 0;
+				var arrDateTime = []; var arrNoOfVisters = []; var totalVistCount = 0;
 					for (var i = 0; i < Response.objSiteMetrics.length; i++) {
-						arrDateTime.push(Response.objSiteMetrics[i].Date);
-						arrNoOfVisters.push(Response.objSiteMetrics[i].VisitCount)
-						totalVistCount += Response.objSiteMetrics[i].VisitCount;
-					}
-					$scope.TotalVistCount = totalVistCount;
-					DrawLineGraph("siteMetrcis", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
-					DrawSmallLineGraph("siteMetrcis1", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
+					arrDateTime.push(Response.objSiteMetrics[i].Date);
+					arrNoOfVisters.push(Response.objSiteMetrics[i].VisitCount)
+					totalVistCount += Response.objSiteMetrics[i].VisitCount;
 				}
-				if (Response.objUniqueVisits) {
-					var arrDateTime1 = []; var arrNoOfVisters1 = []; var totalVistCount1 = 0;
-					for (var i = 0; i < Response.objUniqueVisits.length; i++) {
-						arrDateTime1.push(Response.objUniqueVisits[i].Date);
-						arrNoOfVisters1.push(Response.objUniqueVisits[i].UniqueCount)
-						totalVistCount1 += Response.objUniqueVisits[i].UniqueCount;
-					}
-					$scope.TotalUniqueCount = totalVistCount1;
-					DrawSmallLineGraph("siteMetrcis2", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
-				}
-				if (Response.objPagesPerViews) {
-					var arrDateTime1 = []; var arrNoOfVisters1 = []; var totalVistCount1 = 0;
-					for (var i = 0; i < Response.objPagesPerViews.length; i++) {
-						arrDateTime1.push(Response.objPagesPerViews[i].Date);
-						arrNoOfVisters1.push(Response.objPagesPerViews[i].PagePerViewCount)
-						totalVistCount1 += Response.objPagesPerViews[i].PagePerViewCount;
-					}
-					$scope.TotalViewCount = totalVistCount1;
-					$scope.TotalPerViewViewCount = 0;
-					if ($scope.TotalVistCount && $scope.TotalVistCount > 0 && $scope.TotalViewCount && $scope.TotalViewCount > 0) {
-						$scope.TotalPerViewViewCount = Math.round(($scope.TotalViewCount / $scope.TotalVistCount), 2);
-					}
-					DrawSmallLineGraph("siteMetrcis3", arrDateTime1, arrNoOfVisters1, "Site Metrics", "Visits");
-					DrawSmallLineGraph("siteMetrcis4", arrDateTime1, arrNoOfVisters1, "Site Metrics", "Visits");
-				}
-				if (Response.objVisterType) {
-					var jsonData = [];
-					var test = {};
-					test = { name: "Repeat Visitors", y: Response.objVisterType.RepeatvistorPer, count: Response.objVisterType.Repeatvistor };
-					jsonData.push(test);
-					test = { name: "New Visitors", y: Response.objVisterType.NewvistorPer, count: Response.objVisterType.Newvistor };
-					jsonData.push(test);
-					DrawPieChart(visterTypeBarChart, '', jsonData);
-				}
-				if (Response.objTopContents) {
-					$scope.TopContents = Response.objTopContents;
-				}
-
-
+				$scope.TotalVistCount = totalVistCount;
+				DrawLineGraph("siteMetrcis", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
+				DrawSmallLineGraph("siteMetrcis1", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
 			}
-		}).finally(function () {
+				if (Response.objUniqueVisits) {
+				var arrDateTime1 = []; var arrNoOfVisters1 = []; var totalVistCount1 = 0;
+				for (var i = 0; i < Response.objUniqueVisits.length; i++) {
+					arrDateTime1.push(Response.objUniqueVisits[i].Date);
+					arrNoOfVisters1.push(Response.objUniqueVisits[i].UniqueCount)
+					totalVistCount1 += Response.objUniqueVisits[i].UniqueCount;
+				}
+				$scope.TotalUniqueCount = totalVistCount1;				
+				DrawSmallLineGraph("siteMetrcis2", arrDateTime, arrNoOfVisters, "Site Metrics", "Visits");
+			}
+			if (Response.objPagesPerViews) {
+				var arrDateTime1 = []; var arrNoOfVisters1 = []; var totalVistCount1 = 0;
+				for (var i = 0; i < Response.objPagesPerViews.length; i++) {
+					arrDateTime1.push(Response.objPagesPerViews[i].Date);
+					arrNoOfVisters1.push(Response.objPagesPerViews[i].PagePerViewCount)
+					totalVistCount1 += Response.objPagesPerViews[i].PagePerViewCount;
+				}
+				$scope.TotalViewCount = totalVistCount1;
+				$scope.TotalPerViewViewCount = 0;
+					if ($scope.TotalVistCount && $scope.TotalVistCount > 0 && $scope.TotalViewCount && $scope.TotalViewCount > 0) {
+					$scope.TotalPerViewViewCount = Math.round(($scope.TotalViewCount / $scope.TotalVistCount), 2);
+				}
+				DrawSmallLineGraph("siteMetrcis3", arrDateTime1, arrNoOfVisters1, "Site Metrics", "Visits");
+				DrawSmallLineGraph("siteMetrcis4", arrDateTime1, arrNoOfVisters1, "Site Metrics", "Visits");
+			}
+				if (Response.objVisterType) {
+				var jsonData = [];
+				var test = {};
+				test = { name: "Repeat Visitors", y: Response.objVisterType.RepeatvistorPer, count: Response.objVisterType.Repeatvistor };
+				jsonData.push(test);
+				test = { name: "New Visitors", y: Response.objVisterType.NewvistorPer, count: Response.objVisterType.Newvistor };
+				jsonData.push(test);
+				DrawPieChart(visterTypeBarChart, '', jsonData);
+			}
+				if (Response.objTopContents) {
+				$scope.TopContents = Response.objTopContents;
+			}
 
-		});
-		WebAnalyticsFactory.GetPagePerformance().then(function (Response) {
-			$scope.PagePerformance = Response;
-		}).finally(function () {
+			
+		}
+	}).finally(function () {
+		
+	});
+	WebAnalyticsFactory.GetPagePerformance().then(function (Response) {
+	    $scope.PagePerformance = Response;
+	}).finally(function () {
 
-		});
+	});
 	}
 
 	$scope.init();
-
+	
 }]);
