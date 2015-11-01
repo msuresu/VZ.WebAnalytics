@@ -80,7 +80,7 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	$scope.TotalUniqueCount = 0;
 	$scope.TotalViewCount = 0;
 	$scope.IsDashBoard = true;
-	$scope.DomainName = "localhost";
+	$scope.DomainName = "vztrackerapp.azurewebsite.net";
 	UserActiveity = { ActivityType: "PageType", DomainName: "11122222" };
 	$scope.MenuClick = function (strMenuName) {
 		if (strMenuName == "Dashboard") {
@@ -124,6 +124,7 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	}
 	$scope.OverAllDasboard = [];
 	$scope.init = function () {
+		$scope.IsDashBoard = true;
 		WebAnalyticsFactory.GetDashboardContent($scope.DomainName).then(function (Response) {
 			$scope.OverAllDasboard = Response;
 			if (Response) {
@@ -189,5 +190,11 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 	}
 
 	$scope.init();
+
+	$scope.Refresh=function()
+	{
+		$scope.DomainName = $("#refresh").val();
+		$scope.init();
+	}
 
 }]);

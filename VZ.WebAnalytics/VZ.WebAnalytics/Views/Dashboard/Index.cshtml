@@ -3,14 +3,23 @@
 }
 <div ng-show="IsDashBoard">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
+           
+            <input class="form-control" id="refresh" placeholder="Enter text" value="{{DomainName}}" />
+            
+
+        </div>
+        <div class="col-lg-4">
+
+            <input type="button" class="btn btn-default" style="width:100px" value="Refresh" ng-click="Refresh()" />
+
 
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                Dashboard <input class="form-control" placeholder="Enter text" value="{{DomainName}}">
+                Dashboard 
             </h1>
             
         </div>
