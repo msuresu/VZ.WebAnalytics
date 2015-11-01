@@ -2,7 +2,7 @@
 var app = angular.module('WebAnalytics', []);
 app.factory('WebAnalyticsFactory', ['$http', '$interval', '$window', '$q', '$sce', '$rootScope', function ($http, $interval, $window, $q, $sce, $rootScope) {
 	var WebAnalyticsFactory = {};
-	var DasboardURL = "http://vztrackerrestapi.azurewebsites.net/TrackerRestService.svc/TrackerRestService.svc/GetDashboard";
+	var DasboardURL = "http://vztrackerrestapi.azurewebsites.net/TrackerRestService.svc/GetDashboard";
 	var PerformanceURL = "http://vztrackerrestapi.azurewebsites.net/TrackerRestService.svc/GetPagePerformance";
 
 	WebAnalyticsFactory.GetDashboardContent = function (request) {
