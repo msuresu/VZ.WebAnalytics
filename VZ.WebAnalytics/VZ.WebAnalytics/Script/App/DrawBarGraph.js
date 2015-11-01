@@ -354,7 +354,7 @@ function DrawLineGraph(htmlId, arrDateTime, NoOfVisters, HeaderText, yaxisTitle)
                     if (ind > -1) {
                         //   s += '<br/>App Name: <b>' + point.series.options.composition[ind].AppName + '</b>';
                     }
-                    // s += '<br/><span style="color:' + point.series.color + '">' + point.series.name + '</span>: <b>' + point.y + '</b>';
+                     s += '<br/><span style="color:' + point.series.color + '">' + point.series.name + '</span>: <b>' + point.y + '</b>';
                 });
 
                 return s;
