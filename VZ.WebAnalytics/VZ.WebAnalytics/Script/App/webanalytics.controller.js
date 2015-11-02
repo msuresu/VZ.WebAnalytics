@@ -112,7 +112,7 @@ app.controller('WebAnalyticsCtrl', ['$scope', '$interval', '$window', '$rootScop
 						arrNoOfVisters1.push($scope.OverAllDasboard.objPagesPerViews[i].PagePerViewCount)
 
 					}
-					$timeout(function () { DrawLineGraph("siteMetrcisPageViews", arrDateTime1, arrNoOfVisters1, "Page Viwes", "Page Viwes Count"); });
+					$timeout(function () { DrawLineGraph("siteMetrcisPageViews", arrDateTime1, arrNoOfVisters1, "Page Viwes", "Page Views Count"); });
 
 
 				}
